@@ -32,19 +32,19 @@ config = {
     },   
     'DEBUG': os.environ.get('DEBUG', False),
     'LOGGING_LEVEL': os.environ.get('LOGGING_LEVEL', 'INFO'),
-    'SQLALCHEMY_DATABASE_URI' : os.environ.get('SQLALCHEMY_DATABASE_URI', "mariadb+pymysql://root:shkeeper@mariadb/bnb-shkeeper?charset=utf8mb4"),
+    'SQLALCHEMY_DATABASE_URI' : os.environ.get('SQLALCHEMY_DATABASE_URI', "mariadb+pymysql://root:flexcryptopay@mariadb/bnb-flexcryptopay?charset=utf8mb4"),
     'SQLALCHEMY_POOL_SIZE' : os.environ.get('SQLALCHEMY_POOL_SIZE', 30),
     'UPDATE_TOKEN_BALANCES_EVERY_SECONDS': int(os.environ.get('UPDATE_TOKEN_BALANCES_EVERY_SECONDS', 3600)),
-    'API_USERNAME': os.environ.get('BNB_USERNAME', 'shkeeper'),
-    'API_PASSWORD': os.environ.get('BNB_PASSWORD', 'shkeeper'),
-    'SHKEEPER_KEY': os.environ.get('SHKEEPER_BACKEND_KEY', 'shkeeper'),
-    'SHKEEPER_HOST': os.environ.get('SHKEEPER_HOST', 'shkeeper:5000'),
+    'API_USERNAME': os.environ.get('BNB_USERNAME', 'flexcryptopay'),
+    'API_PASSWORD': os.environ.get('BNB_PASSWORD', 'flexcryptopay'),
+    'FLEXCRYPTOPAY_KEY': os.environ.get('FLEXCRYPTOPAY_BACKEND_KEY', 'flexcryptopay'),
+    'FLEXCRYPTOPAY_HOST': os.environ.get('FLEXCRYPTOPAY_HOST', 'flexcryptopay:5000'),
     'MULTIPLIER': os.environ.get('MULTIPLIER', '1.1'),#multiply the max fee per gas, should be >1,
     'PAYOUT_MULTIPLIER': os.environ.get('PAYOUT_MULTIPLIER', '1.1'), #multiply the amount of gas for payout, should be >1,
     'PRICE_MULTIPLIER' : os.environ.get('PRICE_MULTIPLIER', '0.9'), #should be <1, used in payout in calc maxFeePerGas to avoid base price changing
     'MAX_PRIORITY_FEE': os.environ.get('MAX_PRIORITY_FEE', '0.00000000300017'), #in BNB
     'SLEEP_AFTER_SEEDING': os.environ.get('SLEEP_AFTER_SEEDING', 60), #in sec
-    'ACCOUNT_PASSWORD' : os.environ.get('ACCOUNT_PASSWORD', "shkeeper"), #Password for restoring account in metamask or others, should be str
+    'ACCOUNT_PASSWORD' : os.environ.get('ACCOUNT_PASSWORD', "flexcryptopay"), #Password for restoring account in metamask or others, should be str
     'REDIS_HOST': os.environ.get('REDIS_HOST', 'localhost'),
     'BNB_HOST': os.environ.get('BNB_HOST', 'bnb'),
     'LAST_BLOCK_LOCKED': os.environ.get('LAST_BLOCK_LOCKED', 'TRUE'),

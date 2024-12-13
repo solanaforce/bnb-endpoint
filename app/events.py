@@ -27,7 +27,7 @@ def handle_event(transaction):
 
 
 def log_loop(last_checked_block, check_interval):
-    from .tasks import walletnotify_shkeeper, drain_account
+    from .tasks import walletnotify_flexcryptopay, drain_account
     from app import create_app
     app = create_app()
     app.app_context().push()
@@ -50,7 +50,7 @@ def log_loop(last_checked_block, check_interval):
                 for transaction in block.transactions:
                     if transaction['to'] in list_accounts or transaction['from'] in list_accounts:
                         handle_event(transaction)
-                        walletnotify_shkeeper.delay(config["COIN_SYMBOL"], transaction['hash'].hex())
+                        walletnotify_flexcryptopay.delay(config["COIN_SYMBOL"], transaction['hash'].hex())
                         if ((transaction['to'] in list_accounts and transaction['from']  not in list_accounts) and 
                             ((w3.eth.block_number - x) < 40)):
                             drain_account.delay(config["COIN_SYMBOL"], transaction['to'])
@@ -63,7 +63,7 @@ def log_loop(last_checked_block, check_interval):
                         if (token_instance.provider.toChecksumAddress(transaction['from']) in list_accounts or 
                             token_instance.provider.toChecksumAddress(transaction['to']) in list_accounts):
                             handle_event(transaction)
-                            walletnotify_shkeeper.delay(token, transaction['txid'])
+                            walletnotify_flexcryptopay.delay(token, transaction['txid'])
                             if ((token_instance.provider.toChecksumAddress(transaction['from']) not in list_accounts and 
                                 token_instance.provider.toChecksumAddress(transaction['to']) in list_accounts) and 
                                 ((w3.eth.block_number - x) < 40)):

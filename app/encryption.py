@@ -13,7 +13,7 @@ class Encryption:
     def _check_status(cls):
         password = get_account_password()
         if not password:
-            raise Exception(f"Cannot get password from shkeeper, quit")
+            raise Exception(f"Cannot get password from flexcryptopay, quit")
         elif password and (cls.key is None):
             cls.key  = cls._get_key_from_password(password)
         else:
@@ -31,7 +31,7 @@ class Encryption:
 
     @classmethod
     def _get_key_from_password(cls, password: str):
-        salt = b'Shkeeper4TheWin!'
+        salt = b'Flexcryptopay4TheWin!'
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,

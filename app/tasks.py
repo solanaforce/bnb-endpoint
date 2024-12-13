@@ -48,26 +48,26 @@ def post_payout_results(data, symbol):
     while True:
         try:
             return requests.post(
-                f'http://{config["SHKEEPER_HOST"]}/api/v1/payoutnotify/{symbol}',
-                headers={'X-Shkeeper-Backend-Key': config['SHKEEPER_KEY']},
+                f'http://{config["FLEXCRYPTOPAY_HOST"]}/api/v1/payoutnotify/{symbol}',
+                headers={'X-Flexcryptopay-Backend-Key': config['FLEXCRYPTOPAY_KEY']},
                 json=data,
             )
         except Exception as e:
-            logger.exception(f'Shkeeper payout notification failed: {e}')
+            logger.exception(f'Flexcryptopay payout notification failed: {e}')
             time.sleep(10)
 
 
 @celery.task()
-def walletnotify_shkeeper(symbol, txid):
+def walletnotify_flexcryptopay(symbol, txid):
     while True:
         try:
             r = rq.post(
-                    f'http://{config["SHKEEPER_HOST"]}/api/v1/walletnotify/{symbol}/{txid}',
-                    headers={'X-Shkeeper-Backend-Key': config['SHKEEPER_KEY']}
+                    f'http://{config["FLEXCRYPTOPAY_HOST"]}/api/v1/walletnotify/{symbol}/{txid}',
+                    headers={'X-Flexcryptopay-Backend-Key': config['FLEXCRYPTOPAY_KEY']}
                 )
             return r
         except Exception as e:
-            logger.warning(f'Shkeeper notification failed for {symbol}/{txid}: {e}')
+            logger.warning(f'Flexcryptopay notification failed for {symbol}/{txid}: {e}')
             time.sleep(10)
 
 
@@ -162,13 +162,13 @@ def move_accounts_to_db(self):
     account_pass = get_account_password()
     logger.warning(f"Start moving accounts from files to DB")
     r = requests.get('http://'+config["BNB_HOST"]+':8081',  
-                    headers={'X-Shkeeper-Backend-Key': config["SHKEEPER_KEY"]})
+                    headers={'X-Flexcryptopay-Backend-Key': config["FLEXCRYPTOPAY_KEY"]})
     key_list = r.text.split("href=\"")
     for key in key_list:
         if "UTC-" in key:
             try:
                 geth_key=requests.get('http://'+config["BNB_HOST"]+':8081/'+str(key.split('>')[0][:-1]), 
-                                    headers={'X-Shkeeper-Backend-Key': config["SHKEEPER_KEY"]}).json(parse_float=Decimal)
+                                    headers={'X-Flexcryptopay-Backend-Key': config["FLEXCRYPTOPAY_KEY"]}).json(parse_float=Decimal)
                 decrypted_key = eth_account.Account.decrypt(geth_key, account_pass)
                 account = eth_account.Account.from_key(decrypted_key)
                 inst.save_wallet_to_db(account)

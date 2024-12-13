@@ -13,10 +13,10 @@ def get_account_password():
         logger.warning("Get password from cache")
         return acc_password
     else:
-        logger.warning("Get password from shkeeper")
+        logger.warning("Get password from flexcryptopay")
         resp = rq.get(
-                        f'http://{config["SHKEEPER_HOST"]}/api/v1/{config["COIN_SYMBOL"]}/decrypt',
-                        headers={'X-Shkeeper-Backend-Key': config['SHKEEPER_KEY']}
+                        f'http://{config["FLEXCRYPTOPAY_HOST"]}/api/v1/{config["COIN_SYMBOL"]}/decrypt',
+                        headers={'X-Flexcryptopay-Backend-Key': config['FLEXCRYPTOPAY_KEY']}
                     )
         r = resp.json()
         if r['persistent_status'] == "disabled":
@@ -35,8 +35,8 @@ def get_account_password():
             elif r["runtime_status"]== "success":
                 acc_password = r['key']
             else:
-                logger.warning(f'Receive unexpected response from shkeeper: {r.text}')       
+                logger.warning(f'Receive unexpected response from flexcryptopay: {r.text}')       
         else:
-            logger.warning(f'Receive unexpected response from shkeeper: {r.text}')
+            logger.warning(f'Receive unexpected response from flexcryptopay: {r.text}')
         
         return acc_password
